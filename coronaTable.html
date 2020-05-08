@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#b1").mouseenter(function() {
+			$.ajax({ //url 주소: xml 나오는 주소, 이경우는 controller 이름
+				url:"http://localhost/DLBD/GetCoronaXML",                       //비동기식이라 GetFood 컨트롤러 쪽에 10초 늦게 응답오게 해도 아래 input에 글자 입력 가능 ,비동기식은 응답 없음이 안뜸
+				success: function(hj){
+					$(hj).find("corona").each(function(i, c) { 
+						//alert($(f).find("name").text());
+						var d=$(c).find("date").text();
+						var n=$(c).find("num").text();
+						var td1=$("<td></td>").text(d);
+						var td2=$("<td></td>").text(n);
+						var tr=$("<tr></tr>").append(td1, td2);
+						$("#t1").append(tr);
+					});             
+				}
+			});    
+		});
+		$("#b1").mouseleave(function() {
+			$("#t1").empty();
+		});
+	
+});
+
+</script>
+</head>
+<body>
+	<h1>코로나 확진자수 </h1>
+	<button id="b1">확인</button><br>
+	<table  id="t1"></table>
+</body>
+</html>
